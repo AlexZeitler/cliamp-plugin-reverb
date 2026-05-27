@@ -1,4 +1,4 @@
--- reverb-graphic: horizontal LED-matrix visualizer rendered with Braille,
+-- reverb: horizontal LED-matrix visualizer rendered with Braille,
 -- inspired by vintage HiFi "Reverberation Graphic" displays.
 -- Layout: 10 frequency bands drawn as vertical bars that grow symmetrically
 -- up AND down from a center line. Band 1 (subbass) sits in the middle;
@@ -6,7 +6,7 @@
 -- is a quad-symmetric pattern that pulses outward with the music.
 
 local p = plugin.register({
-    name = "reverb-graphic",
+    name = "reverb",
     type = "visualizer",
 })
 

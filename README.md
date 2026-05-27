@@ -1,30 +1,32 @@
-# cliamp-plugin-reverb-graphic
+# cliamp-plugin-reverb
 
 A horizontal LED-matrix visualizer for [cliamp](https://cliamp.stream), inspired by vintage HiFi "Reverberation Graphic" displays. Ten frequency bands are drawn as vertical bars rendered with Unicode braille (U+2800 to U+28FF), growing symmetrically up AND down from a center line. Band 1 (subbass) sits in the middle; higher bands fan outward to both sides (mirrored left/right). The result is a quad-symmetric pattern that pulses outward with the music. Sibling of [led-burst](https://github.com/AlexZeitler/cliamp-plugin-led-burst), [block-burst](https://github.com/AlexZeitler/cliamp-plugin-block-burst), and [vu-meter](https://github.com/AlexZeitler/cliamp-plugin-vu-meter).
+
+https://github.com/user-attachments/assets/12a15260-6246-4845-9bed-b1310d909f6d
 
 ## Install
 
 ```sh
-cliamp plugins install AlexZeitler/cliamp-plugin-reverb-graphic
+cliamp plugins install AlexZeitler/cliamp-plugin-reverb
 ```
 
-Then start cliamp and press `v` to cycle visualizers until `reverb-graphic` appears.
+Then start cliamp and press `v` to cycle visualizers until `reverb` appears.
 
 To pin a specific version:
 
 ```sh
-cliamp plugins install AlexZeitler/cliamp-plugin-reverb-graphic@v0.1.0
+cliamp plugins install AlexZeitler/cliamp-plugin-reverb@v0.1.0
 ```
 
 Remove with:
 
 ```sh
-cliamp plugins remove reverb-graphic
+cliamp plugins remove reverb
 ```
 
 ## Tuning
 
-The plugin is a single Lua file. Edit `~/.config/cliamp/plugins/reverb-graphic.lua` after installing if you want to customize:
+The plugin is a single Lua file. Edit `~/.config/cliamp/plugins/reverb.lua` after installing if you want to customize:
 
 | What | Where | Effect |
 |------|-------|--------|
@@ -33,14 +35,6 @@ The plugin is a single Lua file. Edit `~/.config/cliamp/plugins/reverb-graphic.l
 | Minimum gap | `MIN_GAP` | Smallest gap between adjacent bars in dots. Default 1. Raise for more breathing room, lower to pack bars tighter on narrow panels. |
 | Bar density | `DOT_STEP` | Vertical dot spacing inside a bar. `1` draws a solid line, `2` (default) gives the LED-matrix look. |
 | Decay rate | `prev - 0.05` in `p:render` | Per-frame fall-off after a peak. Lower for slower decay (bars hang longer), higher for snappier response. |
-
-## How it works
-
-cliamp gives Lua visualizer plugins a `bands` table of 10 mono spectrum values (0.0 to 1.0) per frame, plus the current frame counter and the panel dimensions. `reverb-graphic` snaps each band's energy up instantly and decays it slowly, then draws ten vertical bars: band 1 at the center, bands 2 to 10 mirrored outward on both sides. Each bar extends symmetrically above and below the center line, with its height scaled to the band's smoothed energy and its color picked from the intensity ramp.
-
-Bars are rasterized into a 2x4 sub-pixel braille grid, so a bar can be as narrow as a single dot (half a char cell) on tight panels. The bar width scales with the per-band spacing (~50%), capped by `MAX_BAR_WIDTH`, so wider panels get fatter bars instead of just more empty gap.
-
-The visualization is symmetric (left and right halves mirror) because Lua plugins do not have access to separate L/R channels - the mirroring is decorative, not stereo.
 
 ## Requirements
 
